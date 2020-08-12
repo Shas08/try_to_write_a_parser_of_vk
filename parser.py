@@ -134,16 +134,20 @@ def parse(html, url):
 
 if __name__ == '__main__':
     username = input()
-    URLS = ("https://vk.com/",
-        "https://twitter.com/",
-        "https://www.facebook.com/",
-        "https://www.tiktok.com/@",
-        "https://badoo.com/",
-        "https://ask.fm/",
-        "https://myspace.com/"
+    URLS = ("https://vk.com",
+        "https://twitter.com",
+        "https://www.facebook.com",
+        "https://www.tiktok.com",
+        "https://badoo.com",
+        "https://ask.fm",
+        "https://myspace.com"
     )
     for URL in URLS:
-        url = URL + username
+        if URL == "https://www.tiktok.com":
+            sign_to_add = '/@'
+        else:
+            sign_to_add = '/'
+        url = sign_to_add.join([URL, username])
         html = requests.get(url, headers=HEADERS, params=None)
         result = parse(html, url)
         if result != None:
