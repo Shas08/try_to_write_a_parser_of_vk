@@ -31,10 +31,7 @@ HEADERS = {
 def get_content_from_vk(html):
     soup = BeautifulSoup(html, "html.parser")
     person = {
-        'name': '-',
-        'on/of': '-',
-        'status': '-',
-        'Profile Info': '-'
+        'social network': 'Vk.com'
     }
 
     is_group = soup.find("div", class_="line_value")
@@ -58,7 +55,7 @@ def get_content_from_vk(html):
     if close_profile != None:
         person["on/of"] = soup.find("div", class_="profile_online_lv").get_text()
         person["status"] = "close profile"
-        person["Profile info"] = soup.find("div", class_="profile_info profile_info_short").get_text(separator=" ", strip=True)
+        person["Profile Info"] = soup.find("div", class_="profile_info profile_info_short").get_text(separator=" ", strip=True)
         return person
 
     hidden_page = soup.find("h5", class_="profile_deleted_text")
@@ -68,7 +65,7 @@ def get_content_from_vk(html):
     else:
         person["on/of"] = soup.find("div", class_="profile_online_lv").get_text()
         person["status"] = "open profile"
-        person["Basic info"] = soup.find("div", class_="profile_info profile_info_short").get_text(strip=True, separator=" ")
+        person["Profile info"] = soup.find("div", class_="profile_info profile_info_short").get_text(strip=True, separator=" ")
         return person
 
 def get_content_from_twitter(html):
@@ -76,7 +73,8 @@ def get_content_from_twitter(html):
     person = {
         'name': soup.find_all("div", class_="css-1dbjc4n"),
         'status': '-',
-        'Profile Info': '-'
+        'Profile Info': '-',
+        'social network': 'Twitter.com'
     }
 
     close_profile = soup.find("svg", class_="r-hkyrab r-4qtqp9 r-yyyyoo r-1xvli5t r-9cviqr r-dnmrzs r-bnwqim r-1plcrui r-lrvibr")
@@ -151,4 +149,4 @@ if __name__ == '__main__':
         html = requests.get(url, headers=HEADERS, params=None)
         result = parse(html, url)
         if result != None:
-            print (result)
+            print (result,'\n')
